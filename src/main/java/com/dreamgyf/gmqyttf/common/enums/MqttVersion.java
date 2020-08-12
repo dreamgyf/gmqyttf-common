@@ -9,7 +9,7 @@ public enum MqttVersion {
 
     private byte protocolLevel;
 
-    MqttVersion(String version){
+    MqttVersion(String version) {
         switch (version) {
             case "3_1":
                 protocolName = new byte[8];
@@ -42,6 +42,12 @@ public enum MqttVersion {
 
     public byte getProtocolLevel() {
         return protocolLevel;
+    }
+
+    public byte[] getProtocol() {
+        byte[] res = new byte[protocolName.length + 1];
+        res[res.length - 1] = protocolLevel;
+        return res;
     }
 
 }
