@@ -1,7 +1,6 @@
 package com.dreamgyf.gmqyttf.common.utils;
 
 import com.dreamgyf.gmqyttf.common.enums.MqttVersion;
-import com.dreamgyf.gmqyttf.common.exception.MqttException;
 import com.dreamgyf.gmqyttf.common.exception.MqttPacketParseException;
 import com.dreamgyf.gmqyttf.common.params.Params;
 import javafx.util.Pair;
