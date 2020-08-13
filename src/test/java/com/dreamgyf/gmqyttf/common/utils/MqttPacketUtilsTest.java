@@ -1,6 +1,8 @@
 package com.dreamgyf.gmqyttf.common.utils;
 
 import com.dreamgyf.gmqyttf.common.enums.MqttPacketType;
+import com.dreamgyf.gmqyttf.common.enums.MqttVersion;
+import com.dreamgyf.gmqyttf.common.exception.MqttPacketParseException;
 import javafx.util.Pair;
 import org.junit.Test;
 
@@ -41,4 +43,18 @@ public class MqttPacketUtilsTest {
         System.out.println("现在byte长度: " + res.getKey() + " 现在String长度: " + res.getValue().length());
         System.out.println("正文: " + res.getValue());
     }
+
+    @Test
+    public void getVersion() {
+        try {
+            if(MqttPacketUtils.getVersion(MqttVersion.V_3_1_1.getProtocol()) == MqttVersion.V_3_1_1) {
+                System.out.println("解析版本正常");
+            } else {
+                System.out.println("解析版本失败");
+            }
+        } catch (MqttPacketParseException e) {
+            System.out.println("解析版本失败");
+        }
+    }
+
 }
