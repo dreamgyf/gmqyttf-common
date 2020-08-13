@@ -12,17 +12,17 @@ public class MqttPacketUtils {
         return (res >= 1 && res <= 14) ? res : -1;
     }
 
-    public static int getRemainingLength(byte[] packet) {
-        if (packet.length < 2)
+    public static int getRemainingLength(byte[] bytes, int start) {
+        if (bytes.length - start < 1)
             return 0;
         int bits = 0;
-        int pos = 1;
+        int pos = start;
         int length = 0;
         do {
-            length += (packet[pos] & 0x7f) << bits;
+            length += (bytes[pos] & 0x7f) << bits;
             bits += 7;
             pos++;
-        } while (pos < packet.length && (packet[pos - 1] & 0x80) != 0);
+        } while (pos < bytes.length && (bytes[pos - 1] & 0x80) != 0);
         return length;
     }
 
@@ -60,7 +60,7 @@ public class MqttPacketUtils {
         byte[] bytesLength = ByteUtils.getSection(bytes, start, 2);
         int length = ByteUtils.byte2ToShort(bytesLength);
         byte[] stringBytes = ByteUtils.getSection(bytes, start + 2, length);
-        return new Pair<>(length, new String(stringBytes, 0, length, Params.charset));
+        return new Pair<>(length + 2, new String(stringBytes, 0, length, Params.charset));
     }
 
     public static MqttVersion getVersion(byte[] versionByte) throws MqttPacketParseException {

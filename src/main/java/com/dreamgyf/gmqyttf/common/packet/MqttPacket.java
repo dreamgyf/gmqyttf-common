@@ -27,7 +27,7 @@ public abstract class MqttPacket {
     }
 
     public int getRemainingLength() {
-        return MqttPacketUtils.getRemainingLength(packet);
+        return MqttPacketUtils.getRemainingLength(packet, 1);
     }
 
     protected abstract void parse() throws MqttPacketParseException;

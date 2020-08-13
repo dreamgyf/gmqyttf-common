@@ -162,14 +162,14 @@ public final class MqttConnectPacket extends MqttPacket {
             pos += 2;
             Pair<Integer, String> clientIdPair = MqttPacketUtils.parseUtf8EncodedStrings(packet, pos);
             this.clientId = clientIdPair.getValue();
-            pos += 2 + clientIdPair.getKey();
+            pos += clientIdPair.getKey();
             if (this.willFlag) {
                 Pair<Integer, String> willTopicPair = MqttPacketUtils.parseUtf8EncodedStrings(packet, pos);
                 this.willTopic = willTopicPair.getValue();
-                pos += 2 + willTopicPair.getKey();
+                pos += willTopicPair.getKey();
                 Pair<Integer, String> willMessagePair = MqttPacketUtils.parseUtf8EncodedStrings(packet, pos);
                 this.willMessage = willMessagePair.getValue();
-                pos += 2 + willMessagePair.getKey();
+                pos += willMessagePair.getKey();
             } else {
                 this.willTopic = "";
                 this.willMessage = "";
@@ -177,7 +177,7 @@ public final class MqttConnectPacket extends MqttPacket {
             if (this.usernameFlag) {
                 Pair<Integer, String> usernamePair = MqttPacketUtils.parseUtf8EncodedStrings(packet, pos);
                 this.username = usernamePair.getValue();
-                pos += 2 + usernamePair.getKey();
+                pos += usernamePair.getKey();
             } else {
                 this.username = "";
             }
