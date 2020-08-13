@@ -153,7 +153,11 @@ public final class MqttConnectPacket extends MqttPacket {
             byte connectFlags = packet[pos++];
             this.cleanSession = ByteUtils.hasBit(connectFlags, 1);
             this.willFlag = ByteUtils.hasBit(connectFlags, 2);
-            this.willQoS = (connectFlags & 0b00011000) >> 3;
+            if(willFlag) {
+                this.willQoS = (connectFlags & 0b00011000) >> 3;
+            } else {
+                this.willQoS = 0;
+            }
             this.willRetain = ByteUtils.hasBit(connectFlags, 5);
             this.passwordFlag = ByteUtils.hasBit(connectFlags, 6);
             this.usernameFlag = ByteUtils.hasBit(connectFlags, 7);
@@ -194,6 +198,25 @@ public final class MqttConnectPacket extends MqttPacket {
             e.printStackTrace();
             throw new MqttPacketParseException("Unknown exception");
         }
+    }
+
+    @Override
+    public String toString() {
+        return "MqttConnectPacket{" +
+                "version=" + version +
+                ", cleanSession=" + cleanSession +
+                ", willFlag=" + willFlag +
+                ", willQoS=" + willQoS +
+                ", willRetain=" + willRetain +
+                ", usernameFlag=" + usernameFlag +
+                ", passwordFlag=" + passwordFlag +
+                ", keepAliveTime=" + keepAliveTime +
+                ", clientId='" + clientId + '\'' +
+                ", willTopic='" + willTopic + '\'' +
+                ", willMessage='" + willMessage + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 
     public static class Builder implements MqttPacket.Builder {
@@ -320,7 +343,7 @@ public final class MqttConnectPacket extends MqttPacket {
         }
 
         @Override
-        public MqttPacket build() {
+        public MqttConnectPacket build() {
             //构建可变报头 Variable header
             byte[] protocolName = version.getProtocolName();
             byte protocolLevel = version.getProtocolLevel();

@@ -46,6 +46,9 @@ public enum MqttVersion {
 
     public byte[] getProtocol() {
         byte[] res = new byte[protocolName.length + 1];
+        for (int i = 0; i < protocolName.length; i++) {
+            res[i] = protocolName[i];
+        }
         res[res.length - 1] = protocolLevel;
         return res;
     }
