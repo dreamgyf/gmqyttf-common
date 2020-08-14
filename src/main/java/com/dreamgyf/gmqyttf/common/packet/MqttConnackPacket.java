@@ -45,8 +45,11 @@ public class MqttConnackPacket extends MqttPacket {
         try {
             byte[] packet = getPacket();
             int pos = getLength() - getRemainingLength();
-            this.sessionPresent = ByteUtils.hasBit(packet[pos], 0);
-            this.connectReturnCode = packet[pos + 1];
+            this.sessionPresent = ByteUtils.hasBit(packet[pos++], 0);
+            this.connectReturnCode = packet[pos++];
+            if(pos != getLength()) {
+                throw new MqttPacketParseException("The packet is wrong!");
+            }
         } catch (ArrayIndexOutOfBoundsException e) {
             e.printStackTrace();
             throw new MqttPacketParseException("The packet is wrong!");

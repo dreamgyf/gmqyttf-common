@@ -188,8 +188,12 @@ public final class MqttConnectPacket extends MqttPacket {
             if (this.passwordFlag) {
                 Pair<Integer, String> passwordPair = MqttPacketUtils.parseUtf8EncodedStrings(packet, pos);
                 this.password = passwordPair.getValue();
+                pos += passwordPair.getKey();
             } else {
                 this.password = "";
+            }
+            if(pos != getLength()) {
+                throw new MqttPacketParseException("The packet is wrong!");
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             e.printStackTrace();
