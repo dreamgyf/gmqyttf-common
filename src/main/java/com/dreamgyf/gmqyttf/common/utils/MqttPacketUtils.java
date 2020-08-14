@@ -2,6 +2,7 @@ package com.dreamgyf.gmqyttf.common.utils;
 
 import com.dreamgyf.gmqyttf.common.enums.MqttVersion;
 import com.dreamgyf.gmqyttf.common.exception.MqttPacketParseException;
+import com.dreamgyf.gmqyttf.common.exception.UnknownMqttVersionException;
 import com.dreamgyf.gmqyttf.common.params.Params;
 import javafx.util.Pair;
 
@@ -64,12 +65,12 @@ public class MqttPacketUtils {
     }
 
     public static MqttVersion getVersion(byte[] versionByte) throws MqttPacketParseException {
-        if (ByteUtils.isEquals(versionByte, MqttVersion.V_3_1.getProtocol())) {
+        if (ByteUtils.isEquals(versionByte, MqttVersion.V_3_1.getProtocolPacket())) {
             return MqttVersion.V_3_1;
-        } else if (ByteUtils.isEquals(versionByte, MqttVersion.V_3_1_1.getProtocol())) {
+        } else if (ByteUtils.isEquals(versionByte, MqttVersion.V_3_1_1.getProtocolPacket())) {
             return MqttVersion.V_3_1_1;
         } else {
-            throw new MqttPacketParseException("Can not parse the version!");
+            throw new UnknownMqttVersionException("Can not parse the version!");
         }
     }
 }

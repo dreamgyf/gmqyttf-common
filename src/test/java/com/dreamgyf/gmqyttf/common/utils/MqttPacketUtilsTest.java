@@ -47,7 +47,7 @@ public class MqttPacketUtilsTest {
     @Test
     public void getVersion() {
         try {
-            if(MqttPacketUtils.getVersion(MqttVersion.V_3_1_1.getProtocol()) == MqttVersion.V_3_1_1) {
+            if(MqttPacketUtils.getVersion(MqttVersion.V_3_1_1.getProtocolPacket()) == MqttVersion.V_3_1_1) {
                 System.out.println("解析版本正常");
             } else {
                 System.out.println("解析版本失败");
