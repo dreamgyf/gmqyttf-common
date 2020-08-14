@@ -9,7 +9,6 @@ public class MqttConnectPacketTest {
     @Test
     public void testBuildAndParse() {
         MqttConnectPacket packet = new MqttConnectPacket.Builder()
-                .version(MqttVersion.V_3_1_1)
                 .cleanSession(true)
                 .willFlag(true)
                 .willQoS(2)
@@ -18,12 +17,12 @@ public class MqttConnectPacketTest {
                 .passwordFlag(true)
                 .username("test12345")
                 .password("test12345")
-                .build();
+                .build(MqttVersion.V3_1_1);
 
         System.out.println("设置值：" + packet);
 
         try {
-            packet.parse();
+            packet.parse(null);
             System.out.println("解析值：" + packet);
         } catch (MqttPacketParseException e) {
             e.printStackTrace();

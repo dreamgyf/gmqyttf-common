@@ -64,7 +64,7 @@ public final class MqttConnectPacket extends MqttPacket {
     private String password;
 
     public MqttConnectPacket(byte[] packet) throws MqttPacketParseException {
-        super(packet);
+        super(packet, null);
     }
 
     private MqttConnectPacket(byte[] packet, MqttVersion version, boolean cleanSession, boolean willFlag, int willQoS,
@@ -139,7 +139,7 @@ public final class MqttConnectPacket extends MqttPacket {
     }
 
     @Override
-    protected void parse() throws MqttPacketParseException {
+    protected void parse(MqttVersion version) throws MqttPacketParseException {
         try {
             byte[] packet = getPacket();
             int pos = getLength() - getRemainingLength();
@@ -221,10 +221,6 @@ public final class MqttConnectPacket extends MqttPacket {
 
     public static class Builder implements MqttPacket.Builder {
         /**
-         * 协议版本
-         */
-        private MqttVersion version = MqttVersion.V_3_1_1;
-        /**
          * 清理会话 Clean Session
          */
         private boolean cleanSession;
@@ -272,11 +268,6 @@ public final class MqttConnectPacket extends MqttPacket {
          * 密码 Password
          */
         private String password = "";
-
-        public Builder version(MqttVersion version) {
-            this.version = version;
-            return this;
-        }
 
         public Builder cleanSession(boolean cleanSession) {
             this.cleanSession = cleanSession;
@@ -343,7 +334,7 @@ public final class MqttConnectPacket extends MqttPacket {
         }
 
         @Override
-        public MqttConnectPacket build() {
+        public MqttConnectPacket build(MqttVersion version) {
             //构建可变报头 Variable header
             byte[] protocolName = version.getProtocolName();
             byte protocolLevel = version.getProtocolLevel();
@@ -393,7 +384,9 @@ public final class MqttConnectPacket extends MqttPacket {
             //构建固定报头 Fixed header
             byte[] remainingLength = MqttPacketUtils.buildRemainingLength(variableHeader.length + payLoad.length);
             byte[] header = new byte[1];
-            header[0] = MqttPacketType.CONNECT << 4;
+            switch (version) {
+                case V3_1_1: header[0] = MqttPacketType.V3_1_1.CONNECT << 4; break;
+            }
             byte[] fixedHeader = ByteUtils.combine(header, remainingLength);
             //构建整个报文
             byte[] packet = ByteUtils.combine(fixedHeader, variableHeader, payLoad);

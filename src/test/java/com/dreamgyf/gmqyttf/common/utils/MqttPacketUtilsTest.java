@@ -12,7 +12,7 @@ public class MqttPacketUtilsTest {
 
     @Test
     public void parseType() {
-        byte type = MqttPacketUtils.parseType((byte) (MqttPacketType.PINGREQ << 4));
+        byte type = MqttPacketUtils.parseType((byte) (MqttPacketType.V3_1_1.PINGREQ << 4));
         System.out.println(type);
     }
 
@@ -47,7 +47,7 @@ public class MqttPacketUtilsTest {
     @Test
     public void getVersion() {
         try {
-            if(MqttPacketUtils.getVersion(MqttVersion.V_3_1_1.getProtocolPacket()) == MqttVersion.V_3_1_1) {
+            if(MqttPacketUtils.getVersion(MqttVersion.V3_1_1.getProtocolPacket()) == MqttVersion.V3_1_1) {
                 System.out.println("解析版本正常");
             } else {
                 System.out.println("解析版本失败");

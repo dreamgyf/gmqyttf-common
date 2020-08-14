@@ -1,9 +1,13 @@
 package com.dreamgyf.gmqyttf.common.enums;
 
+/**
+ * 暂时只支持v3.1.1
+ */
 public enum MqttVersion {
 
-    V_3_1("3_1"),
-    V_3_1_1("3_1_1");
+//    V3_1("3_1"),
+    V3_1_1("3_1_1");
+//    V5("5");
 
     private byte[] protocolName;
 
@@ -32,6 +36,16 @@ public enum MqttVersion {
                 protocolName[4] = "T".getBytes()[0];
                 protocolName[5] = "T".getBytes()[0];
                 protocolLevel = 4;
+                break;
+            case "5":
+                protocolName = new byte[6];
+                protocolName[0] = 0;
+                protocolName[1] = 4;
+                protocolName[2] = "M".getBytes()[0];
+                protocolName[3] = "Q".getBytes()[0];
+                protocolName[4] = "T".getBytes()[0];
+                protocolName[5] = "T".getBytes()[0];
+                protocolLevel = 5;
                 break;
         }
     }

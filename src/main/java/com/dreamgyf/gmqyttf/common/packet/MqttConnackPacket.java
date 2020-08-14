@@ -1,6 +1,7 @@
 package com.dreamgyf.gmqyttf.common.packet;
 
 import com.dreamgyf.gmqyttf.common.enums.MqttPacketType;
+import com.dreamgyf.gmqyttf.common.enums.MqttVersion;
 import com.dreamgyf.gmqyttf.common.exception.MqttPacketParseException;
 import com.dreamgyf.gmqyttf.common.utils.ByteUtils;
 import com.dreamgyf.gmqyttf.common.utils.MqttPacketUtils;
@@ -15,8 +16,8 @@ public class MqttConnackPacket extends MqttPacket {
      */
     private byte connectReturnCode;
 
-    public MqttConnackPacket(byte[] packet) throws MqttPacketParseException {
-        super(packet);
+    public MqttConnackPacket(byte[] packet, MqttVersion version) throws MqttPacketParseException {
+        super(packet,version);
     }
 
     private MqttConnackPacket(byte[] packet, boolean sessionPresent, byte connectReturnCode) {
@@ -34,7 +35,13 @@ public class MqttConnackPacket extends MqttPacket {
     }
 
     @Override
-    protected void parse() throws MqttPacketParseException {
+    protected void parse(MqttVersion version) throws MqttPacketParseException {
+        switch (version) {
+            case V3_1_1: parseV311();
+        }
+    }
+
+    private void parseV311() throws MqttPacketParseException {
         try {
             byte[] packet = getPacket();
             int pos = getLength() - getRemainingLength();
@@ -43,6 +50,9 @@ public class MqttConnackPacket extends MqttPacket {
         } catch (ArrayIndexOutOfBoundsException e) {
             e.printStackTrace();
             throw new MqttPacketParseException("The packet is wrong!");
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            throw new MqttPacketParseException("Unknown exception");
         }
     }
 
@@ -75,7 +85,14 @@ public class MqttConnackPacket extends MqttPacket {
         }
 
         @Override
-        public MqttConnackPacket build() {
+        public MqttConnackPacket build(MqttVersion version) {
+            switch (version) {
+                case V3_1_1: return buildV311();
+                default: return null;
+            }
+        }
+
+        private MqttConnackPacket buildV311() {
             //构建可变报头 Variable header
             byte[] variableHeader = new byte[2];
             if(sessionPresent) {
@@ -84,7 +101,7 @@ public class MqttConnackPacket extends MqttPacket {
             variableHeader[1] = connectReturnCode;
             //构建固定报头
             byte[] header = new byte[1];
-            header[0] = MqttPacketType.CONNACK << 4;
+            header[0] = MqttPacketType.V3_1_1.CONNACK << 4;
             byte[] remainingLength = MqttPacketUtils.buildRemainingLength(variableHeader.length);
             byte[] fixedHeader = ByteUtils.combine(header, remainingLength);
             //构建整个报文
