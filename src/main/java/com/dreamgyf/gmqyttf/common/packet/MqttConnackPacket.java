@@ -46,6 +46,14 @@ public class MqttConnackPacket extends MqttPacket {
         }
     }
 
+    @Override
+    public String toString() {
+        return "MqttConnackPacket{" +
+                "sessionPresent=" + sessionPresent +
+                ", connectReturnCode=" + connectReturnCode +
+                '}';
+    }
+
     public static class Builder implements MqttPacket.Builder {
         /**
          * 当前会话 Session Present
