@@ -151,8 +151,10 @@ public final class MqttPublishPacket extends MqttPacket {
             return this;
         }
 
-        public Builder QoS(int qoS) {
-            QoS = qoS;
+        public Builder QoS(int QoS) {
+            if (QoS < 0 || QoS > 2)
+                throw new IllegalArgumentException("The value of QoS must be between 0 and 2.");
+            this.QoS = QoS;
             return this;
         }
 
