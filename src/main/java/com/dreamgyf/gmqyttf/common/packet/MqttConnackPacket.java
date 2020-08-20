@@ -6,7 +6,7 @@ import com.dreamgyf.gmqyttf.common.exception.MqttPacketParseException;
 import com.dreamgyf.gmqyttf.common.utils.ByteUtils;
 import com.dreamgyf.gmqyttf.common.utils.MqttPacketUtils;
 
-public class MqttConnackPacket extends MqttPacket {
+public final class MqttConnackPacket extends MqttPacket {
     /**
      * 当前会话 Session Present
      */
@@ -17,7 +17,7 @@ public class MqttConnackPacket extends MqttPacket {
     private byte connectReturnCode;
 
     public MqttConnackPacket(byte[] packet, MqttVersion version) throws MqttPacketParseException {
-        super(packet,version);
+        super(packet, version);
     }
 
     private MqttConnackPacket(byte[] packet, boolean sessionPresent, byte connectReturnCode) {
@@ -37,7 +37,8 @@ public class MqttConnackPacket extends MqttPacket {
     @Override
     protected void parse(MqttVersion version) throws MqttPacketParseException {
         switch (version) {
-            case V3_1_1: parseV311();
+            case V3_1_1:
+                parseV311();
         }
     }
 
@@ -47,7 +48,7 @@ public class MqttConnackPacket extends MqttPacket {
             int pos = getLength() - getRemainingLength();
             this.sessionPresent = ByteUtils.hasBit(packet[pos++], 0);
             this.connectReturnCode = packet[pos++];
-            if(pos != getLength()) {
+            if (pos != getLength()) {
                 throw new MqttPacketParseException("The packet is wrong!");
             }
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -90,15 +91,17 @@ public class MqttConnackPacket extends MqttPacket {
         @Override
         public MqttConnackPacket build(MqttVersion version) {
             switch (version) {
-                case V3_1_1: return buildV311();
-                default: return null;
+                case V3_1_1:
+                    return buildV311();
+                default:
+                    return null;
             }
         }
 
         private MqttConnackPacket buildV311() {
             //构建可变报头 Variable header
             byte[] variableHeader = new byte[2];
-            if(sessionPresent) {
+            if (sessionPresent) {
                 variableHeader[0] |= 0b00000001;
             }
             variableHeader[1] = connectReturnCode;

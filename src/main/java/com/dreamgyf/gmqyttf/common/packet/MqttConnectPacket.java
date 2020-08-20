@@ -153,7 +153,7 @@ public final class MqttConnectPacket extends MqttPacket {
             byte connectFlags = packet[pos++];
             this.cleanSession = ByteUtils.hasBit(connectFlags, 1);
             this.willFlag = ByteUtils.hasBit(connectFlags, 2);
-            if(willFlag) {
+            if (willFlag) {
                 this.willQoS = (connectFlags & 0b00011000) >> 3;
             } else {
                 this.willQoS = 0;
@@ -192,7 +192,7 @@ public final class MqttConnectPacket extends MqttPacket {
             } else {
                 this.password = "";
             }
-            if(pos != getLength()) {
+            if (pos != getLength()) {
                 throw new MqttPacketParseException("The packet is wrong!");
             }
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -389,7 +389,9 @@ public final class MqttConnectPacket extends MqttPacket {
             byte[] remainingLength = MqttPacketUtils.buildRemainingLength(variableHeader.length + payLoad.length);
             byte[] header = new byte[1];
             switch (version) {
-                case V3_1_1: header[0] = MqttPacketType.V3_1_1.CONNECT << 4; break;
+                case V3_1_1:
+                    header[0] = MqttPacketType.V3_1_1.CONNECT << 4;
+                    break;
             }
             byte[] fixedHeader = ByteUtils.combine(header, remainingLength);
             //构建整个报文
