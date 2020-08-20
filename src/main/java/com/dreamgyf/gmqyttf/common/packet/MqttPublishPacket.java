@@ -63,9 +63,45 @@ public final class MqttPublishPacket extends MqttPacket {
         this.message = message;
     }
 
+    public boolean isDUP() {
+        return DUP;
+    }
+
+    public int getQoS() {
+        return QoS;
+    }
+
+    public boolean isRETAIN() {
+        return RETAIN;
+    }
+
+    public short getId() {
+        return id;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
     @Override
     protected void parse(MqttVersion version) throws MqttPacketParseException {
 
+    }
+
+    @Override
+    public String toString() {
+        return "MqttPublishPacket{" +
+                "DUP=" + DUP +
+                ", QoS=" + QoS +
+                ", RETAIN=" + RETAIN +
+                ", id=" + id +
+                ", topic='" + topic + '\'' +
+                ", message='" + message + '\'' +
+                '}';
     }
 
     public static class Builder implements MqttPacket.Builder {
