@@ -6,6 +6,7 @@ import com.dreamgyf.gmqyttf.common.exception.MqttPacketParseException;
 import com.dreamgyf.gmqyttf.common.params.Params;
 import com.dreamgyf.gmqyttf.common.utils.ByteUtils;
 import com.dreamgyf.gmqyttf.common.utils.MqttPacketUtils;
+import javafx.util.Pair;
 
 public final class MqttPublishPacket extends MqttPacket {
     /**
@@ -89,7 +90,29 @@ public final class MqttPublishPacket extends MqttPacket {
 
     @Override
     protected void parse(MqttVersion version) throws MqttPacketParseException {
+        try {
+            byte[] packet = getPacket();
+            this.DUP = ByteUtils.hasBit(packet[0], 3);
+            this.QoS = (packet[0] & 0b00000110) >> 1;
+            this.RETAIN = ByteUtils.hasBit(packet[0], 0);
+            int pos = getLength() - getRemainingLength();
+            Pair<Integer, String> topicPair = MqttPacketUtils.parseUtf8EncodedStrings(packet, pos);
+            this.topic = topicPair.getValue();
+            pos += topicPair.getKey();
+            if (this.QoS != 0) {
+                byte[] idBytes = ByteUtils.getSection(packet, pos, 2);
+                this.id = ByteUtils.byte2ToShort(idBytes);
+                pos += 2;
+            }
+            this.message = new String(packet, pos, getLength() - pos, Params.charset);
 
+        } catch (ArrayIndexOutOfBoundsException e) {
+            e.printStackTrace();
+            throw new MqttPacketParseException("The packet is wrong!");
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            throw new MqttPacketParseException("Unknown exception");
+        }
     }
 
     @Override
