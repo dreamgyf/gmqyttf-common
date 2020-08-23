@@ -2,8 +2,6 @@ package com.dreamgyf.gmqyttf.common.utils;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 public class ByteUtilsTest {
 
     @Test

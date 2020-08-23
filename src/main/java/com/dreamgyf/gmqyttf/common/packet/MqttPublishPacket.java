@@ -90,6 +90,14 @@ public final class MqttPublishPacket extends MqttPacket {
 
     @Override
     protected void parse(MqttVersion version) throws MqttPacketParseException {
+        switch (version) {
+            case V3_1_1:
+                parseV311();
+                break;
+        }
+    }
+
+    private void parseV311() throws MqttPacketParseException {
         try {
             byte[] packet = getPacket();
             this.DUP = ByteUtils.hasBit(packet[0], 3);
@@ -105,7 +113,6 @@ public final class MqttPublishPacket extends MqttPacket {
                 pos += 2;
             }
             this.message = new String(packet, pos, getLength() - pos, Params.charset);
-
         } catch (ArrayIndexOutOfBoundsException e) {
             e.printStackTrace();
             throw new MqttPacketParseException("The packet is wrong!");

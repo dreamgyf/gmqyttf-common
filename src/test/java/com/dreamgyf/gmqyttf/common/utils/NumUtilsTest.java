@@ -3,11 +3,6 @@ package com.dreamgyf.gmqyttf.common.utils;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.Collections;
-
-import static org.junit.Assert.*;
-
 public class NumUtilsTest {
 
     /**
