@@ -5,7 +5,7 @@ package com.dreamgyf.gmqyttf.common.enums;
  */
 public enum MqttVersion {
 
-//    V3_1("3_1"),
+    //    V3_1("3_1"),
     V3_1_1("3_1_1");
 //    V5("5");
 

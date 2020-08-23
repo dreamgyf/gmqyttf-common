@@ -140,10 +140,9 @@ public final class MqttConnectPacket extends MqttPacket {
 
     @Override
     protected void parse(MqttVersion version) throws MqttPacketParseException {
-        int pos;
         try {
             byte[] packet = getPacket();
-            pos = getLength() - getRemainingLength();
+            int pos = getLength() - getRemainingLength();
             byte[] protocolNameLength = new byte[2];
             protocolNameLength[0] = packet[pos];
             protocolNameLength[1] = packet[pos + 1];
@@ -193,15 +192,15 @@ public final class MqttConnectPacket extends MqttPacket {
             } else {
                 this.password = "";
             }
+            if (pos != getLength()) {
+                throw new MqttPacketParseException("The packet is wrong!");
+            }
         } catch (ArrayIndexOutOfBoundsException e) {
             e.printStackTrace();
             throw new MqttPacketParseException("The packet is wrong!");
         } catch (RuntimeException e) {
             e.printStackTrace();
             throw new MqttPacketParseException("Unknown exception");
-        }
-        if (pos != getLength()) {
-            throw new MqttPacketParseException("The packet is wrong!");
         }
     }
 

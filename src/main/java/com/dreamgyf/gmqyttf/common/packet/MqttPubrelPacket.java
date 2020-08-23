@@ -6,7 +6,7 @@ import com.dreamgyf.gmqyttf.common.exception.MqttPacketParseException;
 import com.dreamgyf.gmqyttf.common.utils.ByteUtils;
 import com.dreamgyf.gmqyttf.common.utils.MqttPacketUtils;
 
-public class MqttPubrecPacket extends MqttPacket {
+public class MqttPubrelPacket extends MqttPacket {
     /**
      * 报文标识符 Packet Identifier
      */
@@ -16,11 +16,11 @@ public class MqttPubrecPacket extends MqttPacket {
         return id;
     }
 
-    public MqttPubrecPacket(byte[] packet, MqttVersion version) throws MqttPacketParseException {
+    public MqttPubrelPacket(byte[] packet, MqttVersion version) throws MqttPacketParseException {
         super(packet, version);
     }
 
-    public MqttPubrecPacket(byte[] packet, short id) {
+    public MqttPubrelPacket(byte[] packet, short id) {
         setPacket(packet);
         this.id = id;
     }
@@ -36,6 +36,9 @@ public class MqttPubrecPacket extends MqttPacket {
     private void parseV311() throws MqttPacketParseException {
         try {
             byte[] packet = getPacket();
+            if (!ByteUtils.hasBit(packet[0], 1)) {
+                throw new MqttPacketParseException("The packet is wrong!");
+            }
             int pos = getLength() - getRemainingLength();
             byte[] idBytes = ByteUtils.getSection(packet, pos, 2);
             this.id = ByteUtils.byte2ToShort(idBytes);
@@ -64,7 +67,7 @@ public class MqttPubrecPacket extends MqttPacket {
         }
 
         @Override
-        public MqttPubrecPacket build(MqttVersion version) {
+        public MqttPubrelPacket build(MqttVersion version) {
             switch (version) {
                 case V3_1_1:
                     return buildV311();
@@ -73,13 +76,14 @@ public class MqttPubrecPacket extends MqttPacket {
             }
         }
 
-        private MqttPubrecPacket buildV311() {
+        private MqttPubrelPacket buildV311() {
             byte[] header = new byte[1];
-            header[0] = MqttPacketType.V3_1_1.PUBREC << 4;
+            header[0] = MqttPacketType.V3_1_1.PUBREL << 4;
+            header[0] |= 0b00000010;
             byte[] idBytes = ByteUtils.shortToByte2(id);
             byte[] remainLength = MqttPacketUtils.buildRemainingLength(idBytes.length);
             byte[] packet = ByteUtils.combine(header, remainLength, idBytes);
-            return new MqttPubrecPacket(packet, id);
+            return new MqttPubrelPacket(packet, id);
         }
     }
 }

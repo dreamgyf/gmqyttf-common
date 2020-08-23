@@ -34,22 +34,21 @@ public class MqttPubackPacket extends MqttPacket {
     }
 
     private void parseV311() throws MqttPacketParseException {
-        int pos;
         try {
             byte[] packet = getPacket();
-            pos = getLength() - getRemainingLength();
+            int pos = getLength() - getRemainingLength();
             byte[] idBytes = ByteUtils.getSection(packet, pos, 2);
             this.id = ByteUtils.byte2ToShort(idBytes);
             pos += 2;
+            if (pos != getLength()) {
+                throw new MqttPacketParseException("The packet is wrong!");
+            }
         } catch (ArrayIndexOutOfBoundsException e) {
             e.printStackTrace();
             throw new MqttPacketParseException("The packet is wrong!");
         } catch (RuntimeException e) {
             e.printStackTrace();
             throw new MqttPacketParseException("Unknown exception");
-        }
-        if (pos != getLength()) {
-            throw new MqttPacketParseException("The packet is wrong!");
         }
     }
 

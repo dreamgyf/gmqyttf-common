@@ -5,8 +5,6 @@ import com.dreamgyf.gmqyttf.common.exception.MqttPacketParseException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 public class MqttPubrecPacketTest {
 
     @Test
