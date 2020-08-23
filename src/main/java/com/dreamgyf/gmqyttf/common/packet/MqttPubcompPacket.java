@@ -6,7 +6,7 @@ import com.dreamgyf.gmqyttf.common.exception.MqttPacketParseException;
 import com.dreamgyf.gmqyttf.common.utils.ByteUtils;
 import com.dreamgyf.gmqyttf.common.utils.MqttPacketUtils;
 
-public final class MqttPubackPacket extends MqttPacket {
+public final class MqttPubcompPacket extends MqttPacket {
     /**
      * 报文标识符 Packet Identifier
      */
@@ -16,11 +16,11 @@ public final class MqttPubackPacket extends MqttPacket {
         return id;
     }
 
-    public MqttPubackPacket(byte[] packet, MqttVersion version) throws MqttPacketParseException {
+    public MqttPubcompPacket(byte[] packet, MqttVersion version) throws MqttPacketParseException {
         super(packet, version);
     }
 
-    public MqttPubackPacket(byte[] packet, short id) {
+    public MqttPubcompPacket(byte[] packet, short id) {
         setPacket(packet);
         this.id = id;
     }
@@ -64,7 +64,7 @@ public final class MqttPubackPacket extends MqttPacket {
         }
 
         @Override
-        public MqttPubackPacket build(MqttVersion version) {
+        public MqttPubcompPacket build(MqttVersion version) {
             switch (version) {
                 case V3_1_1:
                     return buildV311();
@@ -73,13 +73,13 @@ public final class MqttPubackPacket extends MqttPacket {
             }
         }
 
-        private MqttPubackPacket buildV311() {
+        private MqttPubcompPacket buildV311() {
             byte[] header = new byte[1];
-            header[0] = MqttPacketType.V3_1_1.PUBACK << 4;
+            header[0] = MqttPacketType.V3_1_1.PUBCOMP << 4;
             byte[] idBytes = ByteUtils.shortToByte2(id);
             byte[] remainLength = MqttPacketUtils.buildRemainingLength(idBytes.length);
             byte[] packet = ByteUtils.combine(header, remainLength, idBytes);
-            return new MqttPubackPacket(packet, id);
+            return new MqttPubcompPacket(packet, id);
         }
     }
 }

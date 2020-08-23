@@ -6,7 +6,7 @@ import com.dreamgyf.gmqyttf.common.exception.MqttPacketParseException;
 import com.dreamgyf.gmqyttf.common.utils.ByteUtils;
 import com.dreamgyf.gmqyttf.common.utils.MqttPacketUtils;
 
-public class MqttPubrelPacket extends MqttPacket {
+public final class MqttPubrelPacket extends MqttPacket {
     /**
      * 报文标识符 Packet Identifier
      */
