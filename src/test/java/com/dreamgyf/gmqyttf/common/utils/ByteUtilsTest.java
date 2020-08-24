@@ -1,5 +1,6 @@
 package com.dreamgyf.gmqyttf.common.utils;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class ByteUtilsTest {
@@ -12,9 +13,12 @@ public class ByteUtilsTest {
             bytes[i] = (byte) i;
         }
         byte[] res = ByteUtils.getSection(bytes, 3, 6);
-        for (byte re : res) {
-            System.out.println(re);
+
+        byte[] answer = new byte[6];
+        for (int i = 0; i < 6; i++) {
+            answer[i] = bytes[i + 3];
         }
+        Assert.assertArrayEquals(res, answer);
     }
 
     @Test
@@ -27,9 +31,16 @@ public class ByteUtilsTest {
             bytes2[i] = (byte) (i + length);
         }
         byte[] res = ByteUtils.combine(bytes1, bytes2);
-        for (byte re : res) {
-            System.out.println(re);
+
+        byte[] answer = new byte[length * 2];
+        for (int i = 0; i < length * 2; i++) {
+            if (i < length) {
+                answer[i] = bytes1[i];
+            } else {
+                answer[i] = bytes2[i - length];
+            }
         }
+        Assert.assertArrayEquals(res, answer);
     }
 
     @Test
@@ -37,7 +48,7 @@ public class ByteUtilsTest {
         short s = 128;
         byte[] bytes = ByteUtils.shortToByte2(s);
         short res = ByteUtils.byte2ToShort(bytes);
-        System.out.println(res);
+        Assert.assertEquals(s, res);
     }
 
     @Test
@@ -49,15 +60,15 @@ public class ByteUtilsTest {
             bytes1[i] = (byte) i;
             bytes2[i] = (byte) i;
         }
-        System.out.println("应该为true: " + ByteUtils.isEquals(bytes1, bytes2));
+        Assert.assertTrue(ByteUtils.isEquals(bytes1, bytes2));
         bytes2[5] = 1;
-        System.out.println("应该为false: " + ByteUtils.isEquals(bytes1, bytes2));
+        Assert.assertFalse(ByteUtils.isEquals(bytes1, bytes2));
     }
 
     @Test
     public void hasBit() {
         byte b = (byte) 0b10000000;
-        System.out.println("应该为true: " + ByteUtils.hasBit(b, 7));
-        System.out.println("应该为false: " + ByteUtils.hasBit(b, 5));
+        Assert.assertTrue(ByteUtils.hasBit(b, 7));
+        Assert.assertFalse(ByteUtils.hasBit(b, 5));
     }
 }

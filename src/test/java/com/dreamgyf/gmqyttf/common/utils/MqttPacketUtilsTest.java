@@ -4,32 +4,29 @@ import com.dreamgyf.gmqyttf.common.enums.MqttPacketType;
 import com.dreamgyf.gmqyttf.common.enums.MqttVersion;
 import com.dreamgyf.gmqyttf.common.exception.MqttPacketParseException;
 import javafx.util.Pair;
+import org.junit.Assert;
 import org.junit.Test;
-
-import java.util.Arrays;
 
 public class MqttPacketUtilsTest {
 
     @Test
     public void parseType() {
         byte type = MqttPacketUtils.parseType((byte) (MqttPacketType.V3_1_1.PINGREQ << 4));
-        System.out.println(type);
+        Assert.assertEquals(type, MqttPacketType.V3_1_1.PINGREQ);
     }
 
     @Test
     public void testRemainingLength() {
         int length = 100;
         byte[] lengthBytes = MqttPacketUtils.buildRemainingLength(length);
-        System.out.println("testRemainingLength bytes: " + Arrays.toString(lengthBytes));
         int lengthRes = MqttPacketUtils.getRemainingLength(lengthBytes, 0);
-        System.out.println("testRemainingLength int: " + lengthRes);
+        Assert.assertEquals(length, lengthRes);
     }
 
     @Test
     public void hasNextRemainingLength() {
-        for (int i = 0x80; i <= 0xff; i++) {
-            System.out.println(i + " hasNextRemainingLength: " + MqttPacketUtils.hasNextRemainingLength((byte) i));
-        }
+        Assert.assertTrue(MqttPacketUtils.hasNextRemainingLength((byte) 0b10000000));
+        Assert.assertFalse(MqttPacketUtils.hasNextRemainingLength((byte) 0b00000000));
     }
 
     @Test
@@ -39,21 +36,26 @@ public class MqttPacketUtilsTest {
                 "这些特点使得它对很多场景来说都是很好的选择，特别是对于受限的环境如机器与机器的通信（M2M）以及物联网环境（IoT）。";
         byte[] strByte = MqttPacketUtils.buildUtf8EncodedStrings(str);
         Pair<Integer, String> res = MqttPacketUtils.parseUtf8EncodedStrings(strByte, 0);
-        System.out.println("原始byte长度: " + strByte.length + " 原始String长度: " + str.length());
-        System.out.println("现在byte长度: " + res.getKey() + " 现在String长度: " + res.getValue().length());
-        System.out.println("正文: " + res.getValue());
+
+        Assert.assertEquals(strByte.length, res.getKey().intValue());
+        Assert.assertEquals(str.length(), res.getValue().length());
+        Assert.assertEquals(str, res.getValue());
     }
 
     @Test
     public void getVersion() {
+        byte[] versionByte = MqttVersion.V3_1_1.getProtocolPacket();
         try {
-            if(MqttPacketUtils.getVersion(MqttVersion.V3_1_1.getProtocolPacket()) == MqttVersion.V3_1_1) {
-                System.out.println("解析版本正常");
-            } else {
-                System.out.println("解析版本失败");
-            }
+            Assert.assertEquals(MqttPacketUtils.getVersion(versionByte), MqttVersion.V3_1_1);
         } catch (MqttPacketParseException e) {
-            System.out.println("解析版本失败");
+            e.printStackTrace();
+            Assert.assertTrue(false);
+        }
+        versionByte[0] = (byte) 0xff;
+        try {
+            Assert.assertNotEquals(MqttPacketUtils.getVersion(versionByte), MqttVersion.V3_1_1);
+        } catch (MqttPacketParseException e) {
+            Assert.assertTrue(true);
         }
     }
 

@@ -22,7 +22,7 @@ public class MqttPubrelPacketTest {
         try {
             byte[] realPacket = packet.getPacket();
             realPacket[0] = MqttPacketType.V3_1_1.PUBREL << 4;
-            new MqttPubrelPacket(realPacket,MqttVersion.V3_1_1);
+            new MqttPubrelPacket(realPacket, MqttVersion.V3_1_1);
             Assert.assertTrue(false);
         } catch (MqttPacketParseException e) {
             Assert.assertTrue(true);
