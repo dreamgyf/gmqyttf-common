@@ -2,6 +2,7 @@ package com.dreamgyf.gmqyttf.common.packet;
 
 import com.dreamgyf.gmqyttf.common.enums.MqttPacketType;
 import com.dreamgyf.gmqyttf.common.enums.MqttVersion;
+import com.dreamgyf.gmqyttf.common.exception.IllegalPacketException;
 import com.dreamgyf.gmqyttf.common.exception.MqttPacketParseException;
 import com.dreamgyf.gmqyttf.common.utils.ByteUtils;
 import com.dreamgyf.gmqyttf.common.utils.MqttPacketUtils;
@@ -37,18 +38,18 @@ public final class MqttPubrelPacket extends MqttPacket {
         try {
             byte[] packet = getPacket();
             if (!ByteUtils.hasBit(packet[0], 1)) {
-                throw new MqttPacketParseException("The packet is wrong!");
+                throw new IllegalPacketException();
             }
             int pos = getLength() - getRemainingLength();
             byte[] idBytes = ByteUtils.getSection(packet, pos, 2);
             this.id = ByteUtils.byte2ToShort(idBytes);
             pos += 2;
             if (pos != getLength()) {
-                throw new MqttPacketParseException("The packet is wrong!");
+                throw new IllegalPacketException();
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             e.printStackTrace();
-            throw new MqttPacketParseException("The packet is wrong!");
+            throw new IllegalPacketException();
         } catch (RuntimeException e) {
             e.printStackTrace();
             throw new MqttPacketParseException("Unknown exception");

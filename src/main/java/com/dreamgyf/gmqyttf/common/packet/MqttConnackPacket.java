@@ -2,6 +2,7 @@ package com.dreamgyf.gmqyttf.common.packet;
 
 import com.dreamgyf.gmqyttf.common.enums.MqttPacketType;
 import com.dreamgyf.gmqyttf.common.enums.MqttVersion;
+import com.dreamgyf.gmqyttf.common.exception.IllegalPacketException;
 import com.dreamgyf.gmqyttf.common.exception.MqttPacketParseException;
 import com.dreamgyf.gmqyttf.common.utils.ByteUtils;
 import com.dreamgyf.gmqyttf.common.utils.MqttPacketUtils;
@@ -49,23 +50,15 @@ public final class MqttConnackPacket extends MqttPacket {
             this.sessionPresent = ByteUtils.hasBit(packet[pos++], 0);
             this.connectReturnCode = packet[pos++];
             if (pos != getLength()) {
-                throw new MqttPacketParseException("The packet is wrong!");
+                throw new IllegalPacketException();
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             e.printStackTrace();
-            throw new MqttPacketParseException("The packet is wrong!");
+            throw new IllegalPacketException();
         } catch (RuntimeException e) {
             e.printStackTrace();
             throw new MqttPacketParseException("Unknown exception");
         }
-    }
-
-    @Override
-    public String toString() {
-        return "MqttConnackPacket{" +
-                "sessionPresent=" + sessionPresent +
-                ", connectReturnCode=" + connectReturnCode +
-                '}';
     }
 
     public static class Builder implements MqttPacket.Builder {

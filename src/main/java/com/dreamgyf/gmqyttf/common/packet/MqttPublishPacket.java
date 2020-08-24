@@ -2,8 +2,9 @@ package com.dreamgyf.gmqyttf.common.packet;
 
 import com.dreamgyf.gmqyttf.common.enums.MqttPacketType;
 import com.dreamgyf.gmqyttf.common.enums.MqttVersion;
+import com.dreamgyf.gmqyttf.common.exception.IllegalPacketException;
 import com.dreamgyf.gmqyttf.common.exception.MqttPacketParseException;
-import com.dreamgyf.gmqyttf.common.params.Params;
+import com.dreamgyf.gmqyttf.common.env.Params;
 import com.dreamgyf.gmqyttf.common.utils.ByteUtils;
 import com.dreamgyf.gmqyttf.common.utils.MqttPacketUtils;
 import javafx.util.Pair;
@@ -115,23 +116,11 @@ public final class MqttPublishPacket extends MqttPacket {
             this.message = new String(packet, pos, getLength() - pos, Params.charset);
         } catch (ArrayIndexOutOfBoundsException e) {
             e.printStackTrace();
-            throw new MqttPacketParseException("The packet is wrong!");
+            throw new IllegalPacketException();
         } catch (RuntimeException e) {
             e.printStackTrace();
             throw new MqttPacketParseException("Unknown exception");
         }
-    }
-
-    @Override
-    public String toString() {
-        return "MqttPublishPacket{" +
-                "DUP=" + DUP +
-                ", QoS=" + QoS +
-                ", RETAIN=" + RETAIN +
-                ", id=" + id +
-                ", topic='" + topic + '\'' +
-                ", message='" + message + '\'' +
-                '}';
     }
 
     public static class Builder implements MqttPacket.Builder {
