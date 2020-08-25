@@ -12,7 +12,7 @@ public interface MqttPacketType {
         byte PUBCOMP = 7;
         byte SUBSCRIBE = 8;
         byte SUBACK = 9;
-        byte UNSUBSCRIBE = 0;
+        byte UNSUBSCRIBE = 10;
         byte UNSUBACK = 11;
         byte PINGREQ = 12;
         byte PINGRESP = 13;
@@ -29,7 +29,7 @@ public interface MqttPacketType {
         byte PUBCOMP = 7;
         byte SUBSCRIBE = 8;
         byte SUBACK = 9;
-        byte UNSUBSCRIBE = 0;
+        byte UNSUBSCRIBE = 10;
         byte UNSUBACK = 11;
         byte PINGREQ = 12;
         byte PINGRESP = 13;

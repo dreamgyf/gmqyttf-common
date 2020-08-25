@@ -36,7 +36,7 @@ public class MqttSubackPacket extends MqttPacket {
     }
 
     public List<Byte> getReturnCodeList() {
-        return returnCodeList;
+        return new ArrayList<>(returnCodeList);
     }
 
     @Override
