@@ -78,7 +78,6 @@ public class MqttSubscribePacket extends MqttPacket {
             if (pos != getLength()) {
                 throw new IllegalPacketException();
             }
-
         } catch (ArrayIndexOutOfBoundsException e) {
             e.printStackTrace();
             throw new IllegalPacketException();

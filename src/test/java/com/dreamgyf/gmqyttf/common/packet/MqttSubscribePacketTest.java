@@ -40,7 +40,7 @@ public class MqttSubscribePacketTest {
             byte[] testPacket = ByteUtils.getSection(realPacket, 0, packet.getLength() - 1);
             packet.setPacket(testPacket);
             packet.parse(MqttVersion.V3_1_1);
-            Assert.assertTrue(false);
+            Assert.fail();
         } catch (MqttPacketParseException e) {
             Assert.assertTrue(true);
         }
@@ -49,7 +49,7 @@ public class MqttSubscribePacketTest {
             byte[] testPacket = ByteUtils.combine(realPacket, new byte[1]);
             packet.setPacket(testPacket);
             packet.parse(MqttVersion.V3_1_1);
-            Assert.assertTrue(false);
+            Assert.fail();
         } catch (MqttPacketParseException e) {
             Assert.assertTrue(true);
         }
