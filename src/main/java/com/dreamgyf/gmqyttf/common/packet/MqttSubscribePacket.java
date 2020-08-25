@@ -56,6 +56,9 @@ public class MqttSubscribePacket extends MqttPacket {
     private void parseV311() throws MqttPacketParseException {
         try {
             byte[] packet = getPacket();
+            if (MqttPacketUtils.parseType(packet[0]) != MqttPacketType.V3_1_1.SUBSCRIBE) {
+                throw new IllegalPacketException();
+            }
             if (!ByteUtils.hasBit(packet[0], 1)) {
                 throw new IllegalPacketException();
             }

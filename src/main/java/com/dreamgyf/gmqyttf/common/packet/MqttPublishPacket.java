@@ -101,6 +101,9 @@ public final class MqttPublishPacket extends MqttPacket {
     private void parseV311() throws MqttPacketParseException {
         try {
             byte[] packet = getPacket();
+            if (MqttPacketUtils.parseType(packet[0]) != MqttPacketType.V3_1_1.PUBLISH) {
+                throw new IllegalPacketException();
+            }
             this.DUP = ByteUtils.hasBit(packet[0], 3);
             this.QoS = (packet[0] & 0b00000110) >> 1;
             this.RETAIN = ByteUtils.hasBit(packet[0], 0);

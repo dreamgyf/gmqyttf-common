@@ -37,6 +37,9 @@ public final class MqttPubackPacket extends MqttPacket {
     private void parseV311() throws MqttPacketParseException {
         try {
             byte[] packet = getPacket();
+            if (MqttPacketUtils.parseType(packet[0]) != MqttPacketType.V3_1_1.PUBACK) {
+                throw new IllegalPacketException();
+            }
             int pos = getLength() - getRemainingLength();
             byte[] idBytes = ByteUtils.getSection(packet, pos, 2);
             this.id = ByteUtils.byte2ToShort(idBytes);

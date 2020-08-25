@@ -46,6 +46,9 @@ public final class MqttConnackPacket extends MqttPacket {
     private void parseV311() throws MqttPacketParseException {
         try {
             byte[] packet = getPacket();
+            if (MqttPacketUtils.parseType(packet[0]) != MqttPacketType.V3_1_1.CONNACK) {
+                throw new IllegalPacketException();
+            }
             int pos = getLength() - getRemainingLength();
             this.sessionPresent = ByteUtils.hasBit(packet[pos++], 0);
             this.connectReturnCode = packet[pos++];

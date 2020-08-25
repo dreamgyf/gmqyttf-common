@@ -143,6 +143,9 @@ public final class MqttConnectPacket extends MqttPacket {
     protected void parse(MqttVersion version) throws MqttPacketParseException {
         try {
             byte[] packet = getPacket();
+            if (MqttPacketUtils.parseType(packet[0]) != MqttPacketType.V3_1_1.CONNECT) {
+                throw new IllegalPacketException();
+            }
             int pos = getLength() - getRemainingLength();
             byte[] protocolNameLength = new byte[2];
             protocolNameLength[0] = packet[pos];

@@ -37,6 +37,9 @@ public final class MqttPubrelPacket extends MqttPacket {
     private void parseV311() throws MqttPacketParseException {
         try {
             byte[] packet = getPacket();
+            if (MqttPacketUtils.parseType(packet[0]) != MqttPacketType.V3_1_1.PUBREL) {
+                throw new IllegalPacketException();
+            }
             if (!ByteUtils.hasBit(packet[0], 1)) {
                 throw new IllegalPacketException();
             }
