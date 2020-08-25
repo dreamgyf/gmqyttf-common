@@ -11,7 +11,7 @@ import javafx.util.Pair;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MqttUnsubscribePacket extends MqttPacket {
+public final class MqttUnsubscribePacket extends MqttPacket {
     /**
      * 报文标识符 Packet Identifier
      */

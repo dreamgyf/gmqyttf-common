@@ -11,7 +11,7 @@ import com.dreamgyf.gmqyttf.common.utils.MqttPacketUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MqttSubackPacket extends MqttPacket {
+public final class MqttSubackPacket extends MqttPacket {
     /**
      * 报文标识符 Packet Identifier
      */

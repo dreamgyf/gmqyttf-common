@@ -12,7 +12,7 @@ import javafx.util.Pair;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MqttSubscribePacket extends MqttPacket {
+public final class MqttSubscribePacket extends MqttPacket {
     /**
      * 报文标识符 Packet Identifier
      */
