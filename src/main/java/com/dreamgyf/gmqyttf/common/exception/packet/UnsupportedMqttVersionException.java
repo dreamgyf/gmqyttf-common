@@ -1,4 +1,4 @@
-package com.dreamgyf.gmqyttf.common.exception;
+package com.dreamgyf.gmqyttf.common.exception.packet;
 
 public class UnsupportedMqttVersionException extends MqttPacketParseException {
     public UnsupportedMqttVersionException() {

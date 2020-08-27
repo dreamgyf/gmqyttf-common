@@ -2,7 +2,7 @@ package com.dreamgyf.gmqyttf.common.packet;
 
 import com.dreamgyf.gmqyttf.common.enums.MqttPacketType;
 import com.dreamgyf.gmqyttf.common.enums.MqttVersion;
-import com.dreamgyf.gmqyttf.common.exception.MqttPacketParseException;
+import com.dreamgyf.gmqyttf.common.exception.packet.MqttPacketParseException;
 import org.junit.Assert;
 import org.junit.Test;
 
