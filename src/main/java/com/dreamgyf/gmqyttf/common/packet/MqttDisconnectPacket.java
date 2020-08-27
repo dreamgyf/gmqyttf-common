@@ -4,7 +4,7 @@ import com.dreamgyf.gmqyttf.common.enums.MqttPacketType;
 import com.dreamgyf.gmqyttf.common.enums.MqttVersion;
 import com.dreamgyf.gmqyttf.common.exception.MqttPacketParseException;
 
-public class MqttDisconnectPacket extends MqttPacket {
+public final class MqttDisconnectPacket extends MqttPacket {
 
     public MqttDisconnectPacket(byte[] packet, MqttVersion version) throws MqttPacketParseException {
         super(packet, version);
