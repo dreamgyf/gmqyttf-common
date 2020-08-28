@@ -12,6 +12,15 @@ public class MqttPacketUtils {
         return (byte) ((head & 0xff) >>> 4);
     }
 
+    public static boolean isTypeInVersion(byte type, MqttVersion version) {
+        switch (version) {
+            case V3_1_1: {
+                return type > 0 && type < 15;
+            }
+        }
+        return false;
+    }
+
     public static int getRemainingLength(byte[] bytes, int start) {
         if (bytes.length - start < 1)
             return 0;
