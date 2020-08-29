@@ -2,7 +2,7 @@ package com.dreamgyf.gmqyttf.common.utils;
 
 import com.dreamgyf.gmqyttf.common.enums.MqttVersion;
 import com.dreamgyf.gmqyttf.common.exception.packet.MqttPacketParseException;
-import com.dreamgyf.gmqyttf.common.exception.packet.UnsupportedMqttVersionException;
+import com.dreamgyf.gmqyttf.common.exception.packet.UnknownVersionException;
 import com.dreamgyf.gmqyttf.common.env.Params;
 import javafx.util.Pair;
 
@@ -67,7 +67,7 @@ public class MqttPacketUtils {
         if (ByteUtils.isEquals(versionByte, MqttVersion.V3_1_1.getProtocolPacket())) {
             return MqttVersion.V3_1_1;
         } else {
-            throw new UnsupportedMqttVersionException("Can not parse the version!");
+            throw new UnknownVersionException("Can not parse the version!");
         }
 //        if (ByteUtils.isEquals(versionByte, MqttVersion.V3_1.getProtocolPacket())) {
 //            return MqttVersion.V3_1;
