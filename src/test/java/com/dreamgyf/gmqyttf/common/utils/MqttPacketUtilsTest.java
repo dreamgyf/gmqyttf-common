@@ -16,6 +16,12 @@ public class MqttPacketUtilsTest {
     }
 
     @Test
+    public void isTypeInVersion() {
+        Assert.assertTrue(MqttPacketUtils.isTypeInVersion((byte) 11, MqttVersion.V3_1_1));
+        Assert.assertFalse(MqttPacketUtils.isTypeInVersion((byte) 0, MqttVersion.V3_1_1));
+    }
+
+    @Test
     public void testRemainingLength() {
         int length = 100;
         byte[] lengthBytes = MqttPacketUtils.buildRemainingLength(length);
