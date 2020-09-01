@@ -20,7 +20,7 @@ public final class MqttSubscribePacket extends MqttPacket {
     /**
      * 主题列表 Topic List
      */
-    private final List<MqttTopic> topicList = new ArrayList<>();
+    private List<MqttTopic> topicList = new ArrayList<>();
 
     public MqttSubscribePacket(byte[] packet, MqttVersion version) throws MqttPacketParseException {
         super(packet, version);
@@ -45,6 +45,9 @@ public final class MqttSubscribePacket extends MqttPacket {
 
     @Override
     protected void parse(MqttVersion version) throws MqttPacketParseException {
+        if (topicList == null) {
+            topicList = new ArrayList<>();
+        }
         topicList.clear();
         switch (version) {
             case V3_1_1:

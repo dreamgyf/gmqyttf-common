@@ -19,7 +19,7 @@ public final class MqttSubackPacket extends MqttPacket {
     /**
      * 返回码清单
      */
-    private final List<Byte> returnCodeList = new ArrayList<>();
+    private List<Byte> returnCodeList = new ArrayList<>();
 
     public MqttSubackPacket(byte[] packet, MqttVersion version) throws MqttPacketParseException {
         super(packet, version);
@@ -41,6 +41,9 @@ public final class MqttSubackPacket extends MqttPacket {
 
     @Override
     protected void parse(MqttVersion version) throws MqttPacketParseException {
+        if (returnCodeList == null) {
+            returnCodeList = new ArrayList<>();
+        }
         returnCodeList.clear();
         switch (version) {
             case V3_1_1:

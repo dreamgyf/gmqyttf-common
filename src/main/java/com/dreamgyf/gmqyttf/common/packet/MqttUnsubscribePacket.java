@@ -19,7 +19,7 @@ public final class MqttUnsubscribePacket extends MqttPacket {
     /**
      * 主题列表 Topic List
      */
-    private final List<String> topicList = new ArrayList<>();
+    private List<String> topicList = new ArrayList<>();
 
     public MqttUnsubscribePacket(byte[] packet, MqttVersion version) throws MqttPacketParseException {
         super(packet, version);
@@ -41,6 +41,9 @@ public final class MqttUnsubscribePacket extends MqttPacket {
 
     @Override
     protected void parse(MqttVersion version) throws MqttPacketParseException {
+        if (topicList == null) {
+            topicList = new ArrayList<>();
+        }
         topicList.clear();
         switch (version) {
             case V3_1_1:
