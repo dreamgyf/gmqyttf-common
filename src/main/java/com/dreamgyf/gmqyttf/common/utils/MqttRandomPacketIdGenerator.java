@@ -28,6 +28,12 @@ public class MqttRandomPacketIdGenerator {
         }
     }
 
+    public boolean contains(short id) {
+        synchronized (this) {
+            return idSet.contains(id);
+        }
+    }
+
     public boolean remove(short id) {
         synchronized (this) {
             if (idSet.contains(id)) {
