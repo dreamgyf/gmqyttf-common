@@ -19,7 +19,7 @@ public final class MqttUnsubscribePacket extends MqttPacket {
     /**
      * 主题列表 Topic List
      */
-    private List<String> topicList = new ArrayList<>();
+    private List<String> topicList;
 
     public MqttUnsubscribePacket(byte[] packet, MqttVersion version) throws MqttPacketParseException {
         super(packet, version);
@@ -28,7 +28,7 @@ public final class MqttUnsubscribePacket extends MqttPacket {
     public MqttUnsubscribePacket(byte[] packet, short id, List<String> topicList) {
         setPacket(packet);
         this.id = id;
-        this.topicList.addAll(topicList);
+        this.topicList = new ArrayList<>(topicList);
     }
 
     public short getId() {

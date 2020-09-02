@@ -20,7 +20,7 @@ public final class MqttSubscribePacket extends MqttPacket {
     /**
      * 主题列表 Topic List
      */
-    private List<MqttTopic> topicList = new ArrayList<>();
+    private List<MqttTopic> topicList;
 
     public MqttSubscribePacket(byte[] packet, MqttVersion version) throws MqttPacketParseException {
         super(packet, version);
@@ -29,6 +29,7 @@ public final class MqttSubscribePacket extends MqttPacket {
     public MqttSubscribePacket(byte[] packet, short id, List<MqttTopic> topicList) {
         setPacket(packet);
         this.id = id;
+        this.topicList = new ArrayList<>();
         for (MqttTopic topic : topicList) {
             MqttTopic temp = new MqttTopic(topic.getTopic(), topic.getQoS());
             this.topicList.add(temp);

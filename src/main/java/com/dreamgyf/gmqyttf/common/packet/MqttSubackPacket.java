@@ -19,7 +19,7 @@ public final class MqttSubackPacket extends MqttPacket {
     /**
      * 返回码清单
      */
-    private List<Byte> returnCodeList = new ArrayList<>();
+    private List<Byte> returnCodeList;
 
     public MqttSubackPacket(byte[] packet, MqttVersion version) throws MqttPacketParseException {
         super(packet, version);
@@ -28,7 +28,7 @@ public final class MqttSubackPacket extends MqttPacket {
     public MqttSubackPacket(byte[] packet, short id, List<Byte> returnCodeList) {
         setPacket(packet);
         this.id = id;
-        this.returnCodeList.addAll(returnCodeList);
+        this.returnCodeList = new ArrayList<>(returnCodeList);
     }
 
     public short getId() {
