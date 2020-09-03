@@ -322,6 +322,54 @@ public final class MqttConnectPacket extends MqttPacket {
             return this;
         }
 
+        public boolean isCleanSession() {
+            return cleanSession;
+        }
+
+        public boolean isWillFlag() {
+            return willFlag;
+        }
+
+        public int getWillQoS() {
+            return willQoS;
+        }
+
+        public boolean isWillRetain() {
+            return willRetain;
+        }
+
+        public boolean isUsernameFlag() {
+            return usernameFlag;
+        }
+
+        public boolean isPasswordFlag() {
+            return passwordFlag;
+        }
+
+        public short getKeepAliveTime() {
+            return keepAliveTime;
+        }
+
+        public String getClientId() {
+            return clientId;
+        }
+
+        public String getWillTopic() {
+            return willTopic;
+        }
+
+        public String getWillMessage() {
+            return willMessage;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
         @Override
         public MqttConnectPacket build(MqttVersion version) {
             //构建可变报头 Variable header

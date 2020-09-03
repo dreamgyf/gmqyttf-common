@@ -84,6 +84,14 @@ public final class MqttConnackPacket extends MqttPacket {
             return this;
         }
 
+        public boolean isSessionPresent() {
+            return sessionPresent;
+        }
+
+        public byte getConnectReturnCode() {
+            return connectReturnCode;
+        }
+
         @Override
         public MqttConnackPacket build(MqttVersion version) {
             switch (version) {

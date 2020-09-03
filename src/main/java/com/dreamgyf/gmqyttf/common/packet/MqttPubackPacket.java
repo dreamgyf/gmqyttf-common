@@ -67,6 +67,10 @@ public final class MqttPubackPacket extends MqttPacket {
             return this;
         }
 
+        public short getId() {
+            return id;
+        }
+
         @Override
         public MqttPubackPacket build(MqttVersion version) {
             switch (version) {

@@ -68,6 +68,10 @@ public final class MqttUnsubackPacket extends MqttPacket {
             return this;
         }
 
+        public short getId() {
+            return id;
+        }
+
         @Override
         public MqttUnsubackPacket build(MqttVersion version) {
             switch (version) {

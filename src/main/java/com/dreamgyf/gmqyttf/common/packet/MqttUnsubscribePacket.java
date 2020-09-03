@@ -108,6 +108,14 @@ public final class MqttUnsubscribePacket extends MqttPacket {
             return this;
         }
 
+        public short getId() {
+            return id;
+        }
+
+        public List<String> getTopicList() {
+            return new ArrayList<>(topicList);
+        }
+
         @Override
         public MqttUnsubscribePacket build(MqttVersion version) {
             switch (version) {

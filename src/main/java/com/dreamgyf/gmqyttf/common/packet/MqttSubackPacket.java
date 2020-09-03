@@ -119,6 +119,14 @@ public final class MqttSubackPacket extends MqttPacket {
             return this;
         }
 
+        public short getId() {
+            return id;
+        }
+
+        public List<Byte> getReturnCodeList() {
+            return new ArrayList<>(returnCodeList);
+        }
+
         @Override
         public MqttSubackPacket build(MqttVersion version) {
             switch (version) {

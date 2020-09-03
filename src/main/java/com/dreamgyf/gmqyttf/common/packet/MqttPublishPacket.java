@@ -200,6 +200,30 @@ public final class MqttPublishPacket extends MqttPacket {
             return this;
         }
 
+        public boolean isDUP() {
+            return DUP;
+        }
+
+        public int getQoS() {
+            return QoS;
+        }
+
+        public boolean isRETAIN() {
+            return RETAIN;
+        }
+
+        public short getId() {
+            return id;
+        }
+
+        public String getTopic() {
+            return topic;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
         @Override
         public MqttPublishPacket build(MqttVersion version) {
             switch (version) {

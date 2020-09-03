@@ -116,6 +116,14 @@ public final class MqttSubscribePacket extends MqttPacket {
             return this;
         }
 
+        public short getId() {
+            return id;
+        }
+
+        public List<MqttTopic> getTopicList() {
+            return new ArrayList<>(topicList);
+        }
+
         @Override
         public MqttSubscribePacket build(MqttVersion version) {
             switch (version) {

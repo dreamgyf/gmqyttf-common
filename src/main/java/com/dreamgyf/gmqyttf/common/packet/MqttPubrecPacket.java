@@ -67,6 +67,10 @@ public final class MqttPubrecPacket extends MqttPacket {
             return this;
         }
 
+        public short getId() {
+            return id;
+        }
+
         @Override
         public MqttPubrecPacket build(MqttVersion version) {
             switch (version) {
