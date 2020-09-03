@@ -34,7 +34,7 @@ public abstract class MqttPacket {
 
     protected abstract void parse(MqttVersion version) throws MqttPacketParseException;
 
-    interface Builder {
+    public interface Builder {
         MqttPacket build(MqttVersion version);
     }
 
