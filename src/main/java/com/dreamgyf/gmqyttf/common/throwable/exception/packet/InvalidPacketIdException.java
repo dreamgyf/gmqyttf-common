@@ -1,4 +1,4 @@
-package com.dreamgyf.gmqyttf.common.exception.packet;
+package com.dreamgyf.gmqyttf.common.throwable.exception.packet;
 
 public class InvalidPacketIdException extends MqttPacketException {
     public InvalidPacketIdException() {

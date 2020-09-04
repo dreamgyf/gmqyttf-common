@@ -2,8 +2,8 @@ package com.dreamgyf.gmqyttf.common.packet;
 
 import com.dreamgyf.gmqyttf.common.enums.MqttPacketType;
 import com.dreamgyf.gmqyttf.common.enums.MqttVersion;
-import com.dreamgyf.gmqyttf.common.exception.packet.IllegalPacketException;
-import com.dreamgyf.gmqyttf.common.exception.packet.MqttPacketParseException;
+import com.dreamgyf.gmqyttf.common.throwable.exception.packet.IllegalPacketException;
+import com.dreamgyf.gmqyttf.common.throwable.exception.packet.MqttPacketParseException;
 import com.dreamgyf.gmqyttf.common.utils.ByteUtils;
 import com.dreamgyf.gmqyttf.common.utils.MqttPacketUtils;
 

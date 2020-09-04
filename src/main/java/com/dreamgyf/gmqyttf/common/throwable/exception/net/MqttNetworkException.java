@@ -1,6 +1,6 @@
-package com.dreamgyf.gmqyttf.common.exception.net;
+package com.dreamgyf.gmqyttf.common.throwable.exception.net;
 
-import com.dreamgyf.gmqyttf.common.exception.MqttException;
+import com.dreamgyf.gmqyttf.common.throwable.exception.MqttException;
 
 public class MqttNetworkException extends MqttException {
     public MqttNetworkException() {

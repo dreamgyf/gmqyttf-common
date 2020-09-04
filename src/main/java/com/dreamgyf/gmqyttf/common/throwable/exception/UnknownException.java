@@ -1,4 +1,4 @@
-package com.dreamgyf.gmqyttf.common.exception;
+package com.dreamgyf.gmqyttf.common.throwable.exception;
 
 public class UnknownException extends MqttException {
     public UnknownException() {

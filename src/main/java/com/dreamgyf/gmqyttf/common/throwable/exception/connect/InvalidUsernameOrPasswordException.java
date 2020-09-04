@@ -1,4 +1,4 @@
-package com.dreamgyf.gmqyttf.common.exception.connect;
+package com.dreamgyf.gmqyttf.common.throwable.exception.connect;
 
 public class InvalidUsernameOrPasswordException extends MqttConnectException {
     public InvalidUsernameOrPasswordException() {

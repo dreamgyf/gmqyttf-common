@@ -1,4 +1,4 @@
-package com.dreamgyf.gmqyttf.common.exception.net;
+package com.dreamgyf.gmqyttf.common.throwable.exception.net;
 
 public class MqttSocketConnectException extends MqttSocketException {
     public MqttSocketConnectException() {

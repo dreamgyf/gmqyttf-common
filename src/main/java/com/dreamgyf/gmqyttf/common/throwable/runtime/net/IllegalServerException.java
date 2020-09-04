@@ -1,6 +1,6 @@
-package com.dreamgyf.gmqyttf.common.exception.net;
+package com.dreamgyf.gmqyttf.common.throwable.runtime.net;
 
-public class IllegalServerException extends MqttNetworkException {
+public class IllegalServerException extends MqttNetworkRuntimeException {
     public IllegalServerException() {
         super();
     }
