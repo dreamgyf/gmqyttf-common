@@ -44,6 +44,12 @@ public class MqttRandomPacketIdGenerator {
         }
     }
 
+    public void clear() {
+        synchronized (this) {
+            idSet.clear();
+        }
+    }
+
     public static MqttRandomPacketIdGenerator create() {
         return new MqttRandomPacketIdGenerator();
     }
